@@ -52,7 +52,7 @@ function setup() {
   trex.addAnimation("running", trex_running);
   trex.addAnimation("collided",trex_collided); 
 
- ground = createSprite(0,615,1600,20);
+ ground = createSprite(0,615,1000,20);
  ground.x = ground.width/2;
  ground.visible=false;
   
