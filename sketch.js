@@ -193,27 +193,7 @@ if(gamestate==='Start'){
   drawSprites();
 }
 
-function spawnClouds() {
-  //write code here to spawn the clouds
-  if (frameCount % 70 === 0) {
-    var cloud = createSprite(Math.round(random(40,100)),10,40,10);
-    cloud.y = Math.round(random(80,120));
-    cloud.addImage(cloudImage);
-    cloud.scale = 0.5;
-    cloud.velocityY = 4;
-    
-     //assign lifetime to the variable
-    cloud.lifetime = 200;
-    
-    //adjust the depth
-    cloud.depth = trex.depth;
-    trex.depth = trex.depth + 1;
-    
-    //add each cloud to the group
-    cloudsGroup.add(cloud);
-  }
-  
-}
+
 
 function spawnPlatforms() {
   if(frameCount%30===0){
