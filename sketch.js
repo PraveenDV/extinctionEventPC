@@ -52,7 +52,7 @@ function setup() {
   trex.addAnimation("running", trex_running);
   trex.addAnimation("collided",trex_collided); 
 
- ground = createSprite(500,615,1500,20);
+ ground = createSprite(510,615,1550,20);
 // ground.x = ground.width/2;
  ground.visible=false;
   
@@ -61,9 +61,13 @@ function setup() {
   
   cloudsGroup = new Group();
   platformsGroup = new Group();
-  
-  
-  
+
+  edge1=createSprite(1280, 500, 10, 1000);
+  edge1.visible=false;
+
+  edge2=createSprite(1, 500, 10, 1000);
+  edge2.visible=false;
+
   score = 0;
   
   gameover=createSprite(600,300,10,10);
@@ -84,12 +88,14 @@ function setup() {
 
 function draw(){
   background(bg);
+ 
 //trex.debug=true;
 strokeWeight(5);
 stroke(0);
 fill("red");
 textSize(20);
 text("Score: "+ score, 1000,50);
+
 if(gamestate==='Start'){
   fill("blue");
   strokeWeight(3);
@@ -180,6 +186,9 @@ if(gamestate==='Start'){
   
   //trex.collide(ground);
   trex.collide(invisibleGround);
+  trex.collide(edge1);
+  trex.collide(edge2);
+
   //trex.collide(platformsGroup);
   drawSprites();
 }
