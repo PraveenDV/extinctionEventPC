@@ -45,38 +45,38 @@ function setup() {
 
   
 
-  trex = createSprite(550,575,1,1);
+  trex = createSprite(windowWidth-729,windowHeight-43,1,1);
   trex.visible=false;
   trex.scale = 0.9;
   trex.setCollider("circle",8,0,40);
   trex.addAnimation("running", trex_running);
   trex.addAnimation("collided",trex_collided); 
 
- ground = createSprite(510,615,1550,20);
+ ground = createSprite(windowWidth-769,windowHeight-3,windowWidth+769,20);
 // ground.x = ground.width/2;
  ground.visible=false;
   
- invisibleGround = createSprite(400,603,2000,3);
+ invisibleGround = createSprite(windowWidth-879,windowHeight-20,windowWidth+719,3);
  invisibleGround.visible = false;
   
   cloudsGroup = new Group();
   platformsGroup = new Group();
 
-  edge1=createSprite(1280, 500, 10, 1000);
+  edge1=createSprite(windowWidth+1, windowHeight-118, 10, windowHeight+378);
   edge1.visible=false;
 
-  edge2=createSprite(1, 500, 10, 1000);
+  edge2=createSprite(windowWidth-1278, windowHeight-118, 10, windowHeight+378);
   edge2.visible=false;
 
   score = 0;
   
-  gameover=createSprite(600,300,10,10);
+  gameover=createSprite(windowWidth-579,windowHeight-468,10,10);
   gameover.addImage(gameoverimg);
-  gameover.scale=0.4;
+  gameover.scale=0.5;
   
-  restart=createSprite(600,280,10,10);
+  restart=createSprite(windowWidth-579,windowHeight-428,10,10);
   restart.addImage(restartimg);
-  restart.scale=0.4;
+  restart.scale=0.5;
   
   restart.visible=false;
   gameover.visible=false;
@@ -84,6 +84,8 @@ function setup() {
   sound=loadSound("checkPoint.mp3");
   soundDie=loadSound("die.mp3");
   soundJump=loadSound("jump.mp3");
+
+  console.log(windowWidth, windowHeight);
 }
 
 function draw(){
@@ -94,7 +96,7 @@ strokeWeight(5);
 stroke(0);
 fill("red");
 textSize(20);
-text("Score: "+ score, 1000,50);
+text("Score: "+ score, windowWidth-279,windowHeight-568);
 
 if(gamestate==='Start'){
   fill("blue");
@@ -176,7 +178,7 @@ if(gamestate==='Start'){
     strokeWeight(3);
     stroke("blue");
     textSize(30);
-    text("Game over! Dino went extinct!", 500, 200);
+    text("Game over! Dino went extinct!", windowWidth-779, windowHeight-318);
 
   }
   
@@ -193,11 +195,31 @@ if(gamestate==='Start'){
   drawSprites();
 }
 
-
+function spawnClouds() {
+  //write code here to spawn the clouds
+  if (frameCount % 70 === 0) {
+    var cloud = createSprite(Math.round(random(40,100)),10,40,10);
+    cloud.y = Math.round(random(80,120));
+    cloud.addImage(cloudImage);
+    cloud.scale = 0.5;
+    cloud.velocityY = 4;
+    
+     //assign lifetime to the variable
+    cloud.lifetime = 200;
+    
+    //adjust the depth
+    cloud.depth = trex.depth;
+    trex.depth = trex.depth + 1;
+    
+    //add each cloud to the group
+    cloudsGroup.add(cloud);
+  }
+  
+}
 
 function spawnPlatforms() {
   if(frameCount%30===0){
-    var platforms = createSprite(random(50, 1000),0, 1,1);
+    var platforms = createSprite(random(windowWidth-1229, windowWidth-279),0, 1,1);
     platforms.setCollider('circle',0,150,300);
     //platforms.debug=true;
     platforms.addImage(meteoriteImg);
@@ -246,7 +268,7 @@ function reset(){
   cloudsGroup.destroyEach();
   
   trex.changeAnimation("running",trex_running);
-  trex.y=590;
+  trex.y=windowHeight-28;
   
   score=0;
   
